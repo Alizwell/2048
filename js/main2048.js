@@ -2,10 +2,14 @@ var  board = new Array();   //用于保存数字的数组
 var  score = 0;    //分数
 var  hasFlag = new  Array();  //是否发生叠加的Flag,初始为false
 
+
+
 $(document).ready(function(){
 	prepareForMobile();
 	newgame();	
 });
+
+
 
 function  prepareForMobile(){
 	//屏幕超过500px时，按默认样式显示
@@ -21,7 +25,6 @@ function  prepareForMobile(){
 	$("#grid-container").css("padding",CellSpace);
 	$("#grid-container").css("border-radius",gridContainer*0.02);
 
-	
 	//更新grid-container.Cell
 	$(".grid-container-cell").css("height",CellNumberWidth);
 	$(".grid-container-cell").css("width",CellNumberWidth);
@@ -30,92 +33,6 @@ function  prepareForMobile(){
 }
 
 
-$(document).keydown(function(event){
-	
-	var  keycode = event.keyCode
-	
-	switch(keycode){
-		case 37: //left
-			event.preventDefault();
-            if( moveLeft() ){
-                setTimeout("getOneRandom()",210);
-                setTimeout("isGameOver(board)",300);
-            }
-            break;
-        case 38: //up
-        	event.preventDefault();
-            if( moveUp() ){
-                setTimeout("getOneRandom()",210);
-                setTimeout("isGameOver(board)",300);
-      
-            }
-            break;
-        case 39: //right
-            if( moveRight() ){
-                setTimeout("getOneRandom()",210);
-                setTimeout("isGameOver(board)",300);
-            }
-            break;
-        case 40: //down
-        	event.preventDefault();
-            if( moveDown() ){
-                setTimeout("getOneRandom()",210);
-                setTimeout("isGameOver(board)",300);
-            }
-            break;
-		default:
-			break;
-	}
-});
-
-
-document.addEventListener("touchstart",function(event){
-	startx = event.touches[0].pageX;
-	starty = event.touches[0].pageY;
-})
-	
-document.addEventListener("touchend",function(event){
-	endx = event.changedTouches[0].pageX;
-	endy = event.changedTouches[0].pageY;
-	
-	delx = endx - startx;
-	dely = endy - starty;
-	
-	//移动意图不明显时不操作
-	if( Math.abs(delx) < 0.3 * documentWidth && Math.abs(dely) < 0.3 * documentWidth  )
-	 return;
-	
-	if ( Math.abs(delx) > Math.abs(dely)){    //X方向移动
-		if (delx > 0 ){//moveright
-			if( moveRight() ){
-                setTimeout("getOneRandom()",210);
-                setTimeout("isGameOver(board)",300);
-            }
-		}
-		else{ //moveleft
-			if( moveLeft() ){
-                setTimeout("getOneRandom()",210);
-                setTimeout("isGameOver(board)",300);
-            }
-		}
-		
-	}else{   //Y方向移动
-		if( dely > 0 ) {//movedown
-			if( moveDown() ){
-                setTimeout("getOneRandom()",210);
-                setTimeout("isGameOver(board)",300);
-            }
-		}
-		else{  //moveup
-			if( moveUp() ){
-                setTimeout("getOneRandom()",210);
-                setTimeout("isGameOver(board)",300);
-            }
-		}
-		
-		
-	}
-})
 
 function  newgame(){
 	
@@ -125,6 +42,7 @@ function  newgame(){
 	getOneRandom();
 	getOneRandom();
 }
+
 
 function  init(){
 	
@@ -218,6 +136,56 @@ function  getOneRandom(){
 }
 
 
+
+document.addEventListener("touchstart",function(event){
+	startx = event.touches[0].pageX;
+	starty = event.touches[0].pageY;
+})
+	
+document.addEventListener("touchend",function(event){
+	endx = event.changedTouches[0].pageX;
+	endy = event.changedTouches[0].pageY;
+	
+	delx = endx - startx;
+	dely = endy - starty;
+	
+	//移动意图不明显时不操作
+	if( Math.abs(delx) < 0.3 * documentWidth && Math.abs(dely) < 0.3 * documentWidth  )
+	 return;
+	
+	if ( Math.abs(delx) > Math.abs(dely)){    //X方向移动
+		if (delx > 0 ){//moveright
+			if( moveRight() ){
+                setTimeout("getOneRandom()",210);
+                setTimeout("isGameOver(board)",300);
+            }
+		}
+		else{ //moveleft
+			if( moveLeft() ){
+                setTimeout("getOneRandom()",210);
+                setTimeout("isGameOver(board)",300);
+            }
+		}
+		
+	}else{   //Y方向移动
+		if( dely > 0 ) {//movedown
+			if( moveDown() ){
+                setTimeout("getOneRandom()",210);
+                setTimeout("isGameOver(board)",300);
+            }
+		}
+		else{  //moveup
+			if( moveUp() ){
+                setTimeout("getOneRandom()",210);
+                setTimeout("isGameOver(board)",300);
+            }
+		}
+		
+		
+	}
+})
+
+
 function  moveLeft(){
 	if ( ! canMoveLeft(board) ){
 		return  false;
@@ -250,9 +218,6 @@ function  moveLeft(){
 	setTimeout("updateBoardView()",200);
 	return  true;
 }
-
-
-
 
 
 function moveRight(){
@@ -353,8 +318,6 @@ function  moveUp(){
 	return  true;
 }
 
-
-
 function  isGameOver(){
 	if( nospace(board) && nomove(board)){
 		gameOver();
@@ -365,3 +328,42 @@ function  isGameOver(){
 function  gameOver(){
 	alert("GAME  IS  OVER!");
 }
+
+
+$(document).keydown(function(event){
+	
+	var  keycode = event.keyCode
+	
+	switch(keycode){
+		case 37: //left
+			event.preventDefault();
+            if( moveLeft() ){
+                setTimeout("getOneRandom()",210);
+                setTimeout("isGameOver(board)",300);
+            }
+            break;
+        case 38: //up
+        	event.preventDefault();
+            if( moveUp() ){
+                setTimeout("getOneRandom()",210);
+                setTimeout("isGameOver(board)",300);
+      
+            }
+            break;
+        case 39: //right
+            if( moveRight() ){
+                setTimeout("getOneRandom()",210);
+                setTimeout("isGameOver(board)",300);
+            }
+            break;
+        case 40: //down
+        	event.preventDefault();
+            if( moveDown() ){
+                setTimeout("getOneRandom()",210);
+                setTimeout("isGameOver(board)",300);
+            }
+            break;
+		default:
+			break;
+	}
+});
